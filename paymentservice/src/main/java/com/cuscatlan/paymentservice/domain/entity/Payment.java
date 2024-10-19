@@ -21,10 +21,9 @@ public class Payment {
     private String status;
     private LocalDateTime createdAt;
 
-    // Constructor vacío
+    // Constructors
     public Payment() {}
 
-    // Constructor con parámetros
     public Payment(Long orderId, Long customerId, Double amount, String paymentMethod) {
         this.orderId = orderId;
         this.customerId = customerId;

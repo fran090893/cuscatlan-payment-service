@@ -19,7 +19,7 @@ public class OrderIntegration {
     public OrderDTO getOrderById(Long id) {
        
             String url = productServiceUrl + "GetOrderById?id=" + id.toString();
-            System.out.println("URL: " + url);  // Para depuración
+            System.out.println("URL: " + url);
 
             OrderDTO order = restTemplate.getForObject(url, OrderDTO.class);
             return order;
