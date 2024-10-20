@@ -8,7 +8,7 @@ import com.cuscatlan.paymentservice.application.dtos.PaymentResponse;
 import com.cuscatlan.paymentservice.domain.dtos.OrderDTO;
 import com.cuscatlan.paymentservice.domain.entity.Payment;
 import com.cuscatlan.paymentservice.domain.repository.IPaymentRepository;
-import com.cuscatlan.paymentservice.infrastructure.OrderIntegration;
+import com.cuscatlan.paymentservice.infrastructure.repositories.OrderIntegration;
 
 @Service
 public class PaymentService {

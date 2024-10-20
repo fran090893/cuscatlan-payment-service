@@ -1,4 +1,4 @@
-package com.cuscatlan.paymentservice.infrastructure;
+package com.cuscatlan.paymentservice.infrastructure.repositories;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.web.client.RestTemplate;
