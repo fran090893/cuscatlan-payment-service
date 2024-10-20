@@ -15,6 +15,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.cuscatlan.paymentservice.domain.dtos.DetailOrderDTO;
 import com.cuscatlan.paymentservice.domain.dtos.OrderDTO;
+import com.cuscatlan.paymentservice.infrastructure.repositories.OrderIntegration;
 
 public class OrderRepository {
     @Mock
