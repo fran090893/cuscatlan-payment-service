@@ -33,7 +33,7 @@ public class Payment {
         this.createdAt = LocalDateTime.now();
     }
 
-    // Getters y Setters
+    // Getters  Setters
     public Long getId() {
         return id;
     }

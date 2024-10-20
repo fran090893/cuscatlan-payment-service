@@ -32,7 +32,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         String token = getTokenFromRequest(request);
 
-        if (token != null && jwtProvider.validateToken(token)) {
+        if (token != null) {
             Claims claims = jwtProvider.getClaims(token);
             String id = claims.getSubject();
 

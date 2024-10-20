@@ -12,7 +12,7 @@ public class PaymentRequest {
         this.paymentMethod = paymentMethod;
     }
 
-    // Getters y Setters
+    // Getters  Setters
     public Long getOrderId() {
         return orderId;
     }

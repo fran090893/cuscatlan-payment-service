@@ -18,8 +18,6 @@ public class LoginController {
 
     @PostMapping("/login")
     public String postMethodName(@RequestBody LoginRequest request) {
-        //TODO: process POST request
-        
         return loginService.login(request);
     }
     

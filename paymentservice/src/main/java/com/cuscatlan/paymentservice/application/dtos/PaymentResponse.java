@@ -11,7 +11,7 @@ public class PaymentResponse {
         this.message = message;
     }
 
-    // Getters y Setters
+    // Getters  Setters
     public Long getOrderId() {
         return orderId;
     }

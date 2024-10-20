@@ -5,7 +5,7 @@ import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.core.userdetails.User;
@@ -14,6 +14,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import com.cuscatlan.paymentservice.UserIntegrationConfig;
 import com.cuscatlan.paymentservice.infrastructure.dtos.LoginResponseDTO;
 import com.cuscatlan.paymentservice.infrastructure.dtos.UserDTO;
 
@@ -25,17 +26,17 @@ import io.jsonwebtoken.security.Keys;
 public class UserIntegration implements UserDetailsService{
 
     private final RestTemplate restTemplate;
-    private static final String FAKE_STORE_LOGIN_URL = "https://fakestoreapi.com/auth/login";
-    private static final String FAKE_STORE_GET_USER = "https://fakestoreapi.com/users/";
+
+    private UserIntegrationConfig userIntegrationConfig;
+    // private static final String FAKE_STORE_LOGIN_URL = "https://fakestoreapi.com/auth/login";
+    // private static final String FAKE_STORE_GET_USER = "https://fakestoreapi.com/users/";
     private final Key secretKey;
 
-    @Value("${jwt.secret}")
-    private String secret;
-
-    public UserIntegration(RestTemplate restTemplate) {
+    @Autowired
+    public UserIntegration(RestTemplate restTemplate, UserIntegrationConfig userIntegrationConfig) {
         this.restTemplate = restTemplate;
-
-        this.secretKey = Keys.hmacShaKeyFor(Base64.getDecoder().decode(secret));
+        this.userIntegrationConfig = userIntegrationConfig;
+        this.secretKey = Keys.hmacShaKeyFor(Base64.getDecoder().decode(userIntegrationConfig.getSecret()));
     }
 
     public String login(String username, String password) {
@@ -47,7 +48,7 @@ public class UserIntegration implements UserDetailsService{
         HttpEntity<Map<String, String>> request = new HttpEntity<>(loginData);
 
         LoginResponseDTO response = restTemplate.exchange(
-            FAKE_STORE_LOGIN_URL,
+            userIntegrationConfig.getLoginUrl(),
             HttpMethod.POST,
             request,
             LoginResponseDTO.class
@@ -63,7 +64,6 @@ public class UserIntegration implements UserDetailsService{
     public boolean validateToken(String token) {
         try {
             Jwts.parserBuilder()
-                .setSigningKey(secretKey)
                 .build()
                 .parseClaimsJws(token);
             return true; 
@@ -74,17 +74,15 @@ public class UserIntegration implements UserDetailsService{
 
     public Claims getClaims(String token) {
         return Jwts.parserBuilder()
-                .setSigningKey(secretKey)
-                .build()
-                .parseClaimsJws(token)
-                .getBody();
+        .build()
+        .parseClaimsJwt(token.substring(0, token.lastIndexOf('.') + 1))
+        .getBody();
     }
 
     public UserDetails loadUserByUsername(String id) {
-        UserDTO user = restTemplate.getForObject(FAKE_STORE_GET_USER+id.toString(), UserDTO.class);
-        return User.withUsername(user.getUserName())
+        UserDTO user = restTemplate.getForObject(userIntegrationConfig.getUserUrl()+id, UserDTO.class);
+        return User.withUsername(user.getUsername())
                 .password(user.getPassword()) 
-                .authorities("") 
                 .build();
     }
 }

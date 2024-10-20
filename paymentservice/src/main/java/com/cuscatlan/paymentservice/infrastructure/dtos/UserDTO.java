@@ -14,7 +14,7 @@ public class UserDTO {
     public String getEmail(){
         return email;
     }
-    public String getUserName(){
+    public String getUsername() { 
         return username;
     }
     public String getPassword(){

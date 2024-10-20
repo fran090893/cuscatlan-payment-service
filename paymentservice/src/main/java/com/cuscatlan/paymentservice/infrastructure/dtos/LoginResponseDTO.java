@@ -3,7 +3,7 @@ package com.cuscatlan.paymentservice.infrastructure.dtos;
 public class LoginResponseDTO {
     private String token;
 
-    // Getters y Setters
+    // Getters  Setters
     public String getToken() {
         return token;
     }
