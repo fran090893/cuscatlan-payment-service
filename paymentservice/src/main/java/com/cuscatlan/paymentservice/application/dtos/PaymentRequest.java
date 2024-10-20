@@ -1,8 +1,16 @@
 package com.cuscatlan.paymentservice.application.dtos;
 
+import javax.validation.constraints.NotNull;
+
+import jakarta.validation.constraints.NotBlank;
+
 public class PaymentRequest {
+    @NotNull(message = "orderId is required")
     private Long orderId;
+    @NotNull(message = "customerId is required")
     private Long customerId;
+    @NotNull(message = "paymentMethod is required")
+    @NotBlank(message = "paymentMethod is required")
     private String paymentMethod;
 
     // Constructor

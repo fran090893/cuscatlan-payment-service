@@ -22,7 +22,7 @@ public class PaymentService {
     public PaymentResponse processPayment(PaymentRequest request) {
         //get order information from microservice order
         OrderDTO order = orderIntegration.getOrderById(request.getOrderId());
-
+        
         //initialize payment
         Payment payment = new Payment(request.getOrderId(), request.getCustomerId(), order.getTotal(), request.getPaymentMethod());
 
